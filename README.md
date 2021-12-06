@@ -142,7 +142,7 @@ select N,case
     from BST  as BT order by N;
 ```
 ### New Companies
-    - With `left join`. 
+- With `left join`. 
     
 ```SQL
 
@@ -163,8 +163,8 @@ select N,case
     ORDER BY 
         c.company_code ASC
 ```
-    - Without `left join`
- ```SQL
+- Without `left join`
+```SQL
     SELECT 
         c.company_code,c.founder,
         count(distinct lm.lead_manager_code),
