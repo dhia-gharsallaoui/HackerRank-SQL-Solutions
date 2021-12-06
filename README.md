@@ -340,7 +340,72 @@ WHERE
 ```
 
 ## [Basic Join Challenges](https://www.hackerrank.com/domains/sql?filters%5Bsubdomains%5D%5B%5D=join)[]()
-Loading ...
+
+### Population Census
+```SQL
+select 
+    sum(city.population)
+from 
+    country left join city on city.countrycode=country.code
+where 
+    country.continent="Asia";
+```
+### African Cities
+```SQL
+select 
+    city.name
+from 
+    country inner join city on city.countrycode=country.code
+where 
+    country.continent="Africa";
+```
+
+### Average Population of Each Continent
+```SQL
+select
+    country.continent, floor(avg(city.population))
+from
+    country inner join city on city.countrycode=country.code
+group by
+    country.continent
+```
+
+### The Report
+```SQL
+select 
+    case when g.grade<8 then NULL
+    else s.name end as names,
+    g.grade,s.marks
+from 
+    students s join grades g on s.marks between g.min_mark and g.max_mark
+order by   
+    g.grade Desc,
+    s.name,
+    s.marks;
+```
+
+### 
+```SQL
+
+```
+
+### 
+```SQL
+
+```
+
+### 
+```SQL
+
+```
+
+### 
+```SQL
+
+```
+
+
+
 ## [Advanced Join Challenges](https://www.hackerrank.com/domains/sql?filters%5Bsubdomains%5D%5B%5D=advanced-join)
 Loading ...
 ## [Alternative Queries Challenges](https://www.hackerrank.com/domains/sql?filters%5Bsubdomains%5D%5B%5D=alternative-queries)
