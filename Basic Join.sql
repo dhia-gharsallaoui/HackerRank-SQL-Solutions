@@ -64,3 +64,61 @@ where
 order by
     w.power desc,
     wp.age desc;
+
+-- Challenges
+select 
+    h.hacker_id,h.name,count(h.hacker_id) as challenges_created
+from 
+    hackers h join challenges c on h.hacker_id=c.hacker_id
+group by
+    h.hacker_id,
+    h.name
+having 
+
+    challenges_created=(
+    select 
+        count(challenge_id) as max_challenges 
+    from
+        challenges 
+    group by 
+        hacker_id
+    order by 
+        max_challenges desc 
+    limit 1 ) 
+    or
+    challenges_created in(
+    select 
+        temp.max_challenges 
+    from 
+        (select  count(challenge_id) AS max_challenges
+    FROM 
+         challenges
+    group by 
+         hacker_id order by max_challenges) temp 
+    group by 
+        temp.max_challenges
+    having 
+        count(temp.max_challenges)=1)
+
+order by 
+    challenges_created desc,
+    h.hacker_id
+  
+-- Contest Leaderboard
+select 
+    h.hacker_id,h.name,sum(ss.max_score) as total_score
+from 
+    hackers h join (select 
+                        s.hacker_id,s.challenge_id,max(score) as max_score
+                    from 
+                        submissions s
+                    group by 
+                        s.hacker_id,s.challenge_id) ss
+                    on h.hacker_id=ss.hacker_id
+group by 
+    h.hacker_id,h.name
+having
+    total_score>0
+order by
+    total_score desc,
+    h.hacker_id
