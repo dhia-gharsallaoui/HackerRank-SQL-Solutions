@@ -14,6 +14,14 @@ from
 where
     district="California";
 
+-- Revising Aggregations - The Count Function
+select 
+    count(*)
+from
+    city
+where
+    population>100000;
+
 -- Average Population
 select
     floor(avg(population))
