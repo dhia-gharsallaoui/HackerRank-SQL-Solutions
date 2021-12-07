@@ -203,6 +203,15 @@ from
 where
     district="California";
 ```
+### Revising Aggregations - The Count Function
+```SQL
+select 
+    count(*)
+from
+    city
+where
+    population>100000;
+```
 
 ### Average Population
 ```SQL
@@ -384,13 +393,39 @@ order by
     s.marks;
 ```
 
-### 
+### Top Competitors
 ```SQL
-
+select
+  h.hacker_id,h.name
+from 
+    submissions s join hackers h on s.hacker_id=h.hacker_id
+    join challenges c on c.challenge_id=s.challenge_id
+    join difficulty d on c.difficulty_level=d.difficulty_level and s.score=d.Score
+group by 
+    h.hacker_id,h.name
+having count(h.hacker_id) > 1 
+order by 
+    count(h.hacker_id) desc,
+    h.hacker_id ;
 ```
 
-### 
+### Ollivander's Inventory
 ```SQL
+select
+    w.id,wp.age,w.coins_needed,w.power
+from 
+    wands w join wands_property wp on w.code=wp.code
+where 
+    wp.is_evil=0 and 
+    w.coins_needed=(select 
+                        min(w2.coins_needed)
+                    from 
+                        wands w2 join wands_property wp2 on w2.code=wp2.code
+                    where 
+                        w2.power=w.power and wp2.age=wp.age)
+order by
+    w.power desc,
+    wp.age desc;
 
 ```
 
