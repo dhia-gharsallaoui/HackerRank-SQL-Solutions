@@ -496,7 +496,123 @@ order by
 
 
 ## [Advanced Join Challenges](https://www.hackerrank.com/domains/sql?filters%5Bsubdomains%5D%5B%5D=advanced-join)
-Loading ...
+
+### SQL Project Planning     
+```sql
+select
+    s.start_date,min(e.end_date)
+from 
+(select
+    end_date
+ from 
+    projects
+ where 
+    end_date not in (select start_date from projects)) e,
+    (select 
+    start_date
+from 
+    projects
+where 
+    start_date not in (select end_date from projects)) s
+    
+where 
+    s.start_date<e.end_date
+group by 
+    s.start_date
+order by
+    datediff(min(e.end_date), s.start_date) asc,
+    s.start_date ;
+```
+### Placements
+```sql
+select 
+    s.name
+from 
+    students s join friends f on s.id=f.id
+    join packages p on p.id=s.id
+    join packages pf on pf.id=f.friend_id
+where
+    pf.salary>p.salary
+order by
+    pf.salary ;
+```
+### Symmetric Pairs
+```sql
+select 
+    f1.x,f1.y
+from
+    functions f1 ,functions f2
+where
+    f1.x<=f1.y
+    and f1.x=f2.y
+    and f1.y=f2.x
+group by
+    f1.x,f1.y
+having 
+    count(case when f1.x=f1.y then f1.x END)>2
+    or count(case when f1.x<f1.y then f1.x end)=1
+order by
+    f1.x,f1.y;
+
+```
+
+### Interviews
+```sql
+select
+    c.contest_id,c.hacker_id,c.name,sum(s.ts) as tst,
+    sum(s.tas)  as tast,sum(vs.tv) as tvt , sum(vs.tuv) as tuvt
+from 
+    contests c join colleges co on c.contest_id=co.contest_id
+    join challenges ch on ch.college_id=co.college_id 
+    left join (select 
+                challenge_id, sum(total_submissions) as ts, sum(total_accepted_submissions) as tas
+         from 
+            submission_stats
+          group by 
+            challenge_id
+         ) s on s.challenge_id=ch.challenge_id
+         
+    left join (select 
+          challenge_id,sum(total_views) as tv,sum(total_unique_views) tuv
+          from 
+            view_stats
+          group by 
+            challenge_id
+         ) vs on vs.challenge_id=ch.challenge_id
+
+group by 
+    c.contest_id,c.hacker_id,c.name
+having 
+    sum(s.ts)+ sum(s.tas)+sum(vs.tv)+ sum(vs.tuv) >0
+order by
+    c.contest_id
+
+
+```
+
+### 15 Days of Learning SQL
+```sql
+
+```
+
+
 ## [Alternative Queries Challenges](https://www.hackerrank.com/domains/sql?filters%5Bsubdomains%5D%5B%5D=alternative-queries)
 
-Loading ...
+
+### Draw The Triangle 1
+```sql
+
+```
+
+
+### Draw The Triangle 2
+```sql
+
+```
+
+
+### Print Prime Numbers
+```sql
+
+```
+
